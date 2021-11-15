@@ -25,5 +25,5 @@ Start the Server
 python manage.py runserver
 ```
 
-Visit `http://localhost:8080`
+Visit `http://localhost:8000`
 
