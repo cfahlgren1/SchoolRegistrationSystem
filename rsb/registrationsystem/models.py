@@ -17,7 +17,7 @@ class Professor(models.Model):
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    professor = models.ForeignKey(Professor, on_delete=DO_NOTHING)
+    professor = models.ForeignKey(Professor, related_name="courses", on_delete=DO_NOTHING)
     crn = models.IntegerField()
     description = models.TextField(blank=True)
     price = models.FloatField(default=0, blank=False)
@@ -69,7 +69,7 @@ class EnrollmentSummary(models.Model):
 class StudentClass(models.Model):
     name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=DO_NOTHING)
-    student = models.ForeignKey(Student, on_delete=DO_NOTHING)
+    student = models.ForeignKey(Student, related_name="classes", on_delete=DO_NOTHING)
     grade = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
