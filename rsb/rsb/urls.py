@@ -15,24 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from registrationsystem.views import CourseViewSet,AdvisorViewSet, EnrollmentSummaryViewSet, GradeReportViewSet, StudentViewSet, AddRequestViewSet, DropRequestViewSet, ProfessorViewSet
+from registrationsystem.views import (
+    CourseViewSet,
+    AdvisorViewSet,
+    EnrollmentSummaryViewSet,
+    GradeReportViewSet,
+    StudentViewSet,
+    AddRequestViewSet,
+    DropRequestViewSet,
+    ProfessorViewSet,
+)
 from rest_framework import routers
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 
 # urls for API endpoints
-router.register(r'courses', CourseViewSet)
-router.register(r'addRequests', AddRequestViewSet)
-router.register(r'dropRequests', DropRequestViewSet)
-router.register(r'professors', ProfessorViewSet)
-router.register(r'students', StudentViewSet)
-router.register(r'enrollmentSummaries', EnrollmentSummaryViewSet)
-router.register(r'gradeReports', GradeReportViewSet)
-router.register(r'advisors', AdvisorViewSet)
+router.register(r"courses", CourseViewSet)
+router.register(r"addRequests", AddRequestViewSet)
+router.register(r"dropRequests", DropRequestViewSet)
+router.register(r"professors", ProfessorViewSet)
+router.register(r"students", StudentViewSet)
+router.register(r"enrollmentSummaries", EnrollmentSummaryViewSet)
+router.register(r"gradeReports", GradeReportViewSet)
+router.register(r"advisors", AdvisorViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path("api/", include(router.urls)),
+    path("admin/", admin.site.urls),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

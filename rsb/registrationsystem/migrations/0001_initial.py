@@ -15,92 +15,246 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Course',
+            name="Course",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('crn', models.IntegerField()),
-                ('description', models.TextField(blank=True)),
-                ('price', models.FloatField(default=0)),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=100)),
+                ("crn", models.IntegerField()),
+                ("description", models.TextField(blank=True)),
+                ("price", models.FloatField(default=0)),
             ],
         ),
         migrations.CreateModel(
-            name='EnrollmentSummary',
+            name="EnrollmentSummary",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.TextField(blank=True)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('report', models.TextField(blank=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.course')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.TextField(blank=True)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("report", models.TextField(blank=True)),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.course",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='GradeReport',
+            name="GradeReport",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.TextField(blank=True)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('report', models.TextField(blank=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.course')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.TextField(blank=True)),
+                ("date", models.DateTimeField(auto_now_add=True)),
+                ("report", models.TextField(blank=True)),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.course",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Student',
+            name="Student",
             fields=[
-                ('slug', models.SlugField(blank=True, default='student', editable=False, max_length=120, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('bill', models.FloatField(default=0)),
-                ('courses', models.ManyToManyField(blank=True, to='registrationsystem.Course')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "slug",
+                    models.SlugField(
+                        blank=True,
+                        default="student",
+                        editable=False,
+                        max_length=120,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("bill", models.FloatField(default=0)),
+                (
+                    "courses",
+                    models.ManyToManyField(blank=True, to="registrationsystem.Course"),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='StudentClass',
+            name="StudentClass",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('grade', models.IntegerField(blank=True, null=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='classes', to='registrationsystem.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("grade", models.IntegerField(blank=True, null=True)),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.course",
+                    ),
+                ),
+                (
+                    "student",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="classes",
+                        to="registrationsystem.student",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Professor',
+            name="Professor",
             fields=[
-                ('slug', models.SlugField(blank=True, default='professor', editable=False, max_length=120, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('enrollmentSummaries', models.ManyToManyField(blank=True, to='registrationsystem.EnrollmentSummary')),
-                ('gradeReports', models.ManyToManyField(blank=True, to='registrationsystem.GradeReport')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "slug",
+                    models.SlugField(
+                        blank=True,
+                        default="professor",
+                        editable=False,
+                        max_length=120,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "enrollmentSummaries",
+                    models.ManyToManyField(
+                        blank=True, to="registrationsystem.EnrollmentSummary"
+                    ),
+                ),
+                (
+                    "gradeReports",
+                    models.ManyToManyField(
+                        blank=True, to="registrationsystem.GradeReport"
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='DropRequest',
+            name="DropRequest",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('course', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "course",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.course",
+                    ),
+                ),
+                (
+                    "student",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.student",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='course',
-            name='professor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='courses', to='registrationsystem.professor'),
+            model_name="course",
+            name="professor",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="courses",
+                to="registrationsystem.professor",
+            ),
         ),
         migrations.CreateModel(
-            name='Advisor',
+            name="Advisor",
             fields=[
-                ('slug', models.SlugField(blank=True, default='advisor', editable=False, max_length=120, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "slug",
+                    models.SlugField(
+                        blank=True,
+                        default="advisor",
+                        editable=False,
+                        max_length=120,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='AddRequest',
+            name="AddRequest",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('course', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='registrationsystem.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "course",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.course",
+                    ),
+                ),
+                (
+                    "student",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="registrationsystem.student",
+                    ),
+                ),
             ],
         ),
     ]
