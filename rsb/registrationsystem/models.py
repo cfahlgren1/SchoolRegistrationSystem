@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE, DO_NOTHING
+from django.utils.text import slugify
 
 # Professor Model
 class Professor(models.Model):
-    id = models.AutoField(primary_key=True)
+    slug = models.SlugField(max_length=120, primary_key=True, editable=False, blank=True, default="professor")
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     enrollmentSummaries = models.ManyToManyField('EnrollmentSummary', blank=True)
@@ -12,6 +13,10 @@ class Professor(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Professor, self).save(*args, **kwargs)
 
 # Course Model
 class Course(models.Model):
@@ -27,6 +32,7 @@ class Course(models.Model):
 
 # Student Model
 class Student(models.Model):
+    slug = models.SlugField(max_length=120, primary_key=True, editable=False, blank=True, default="student")
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE) # delete this student account, if user deletes account
     courses = models.ManyToManyField(Course, blank=True)
@@ -42,6 +48,10 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Student, self).save(*args, **kwargs)
 
 # Enrollment Summary
 class EnrollmentSummary(models.Model):
@@ -98,11 +108,16 @@ class GradeReport(models.Model):
 
 # Advisor
 class Advisor(models.Model):
+    slug = models.SlugField(max_length=120, primary_key=True, editable=False, blank=True, default="advisor")
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE) # delete this student account, if user deletes account
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Advisor, self).save(*args, **kwargs)
 
 # Drop Request
 class DropRequest(models.Model):

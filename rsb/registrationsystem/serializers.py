@@ -14,7 +14,7 @@ class ProfessorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Professor
-        fields = ['id','name', 'courses']
+        fields = ['slug','name', 'courses']
     
 
 class DropRequestSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,7 +41,7 @@ class StudentClassSerializer(serializers.HyperlinkedModelSerializer):
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
-        fields = ['id', 'name', 'classes']
+        fields = ['slug', 'name', 'classes', 'bill']
     
     classes = StudentClassSerializer(many=True, read_only=True)
 
@@ -58,4 +58,4 @@ class GradeReportSerializer(serializers.HyperlinkedModelSerializer):
 class AdvisorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Advisor
-        fields = ["name"]
+        fields = ["slug","name"]
